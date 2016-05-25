@@ -1,0 +1,32 @@
+int incomingByte = 0; // almacena el dato serie
+int pin0=0;
+int pin1=1;
+int valorF=0;
+int valorL=0;
+
+void setup() {
+Serial.begin(9600); // abre el puerto serie, y le asigna la velocidad de 9600 bps
+}
+void loop() {
+  valorF=analogRead(pin0);
+   
+// envía datos sólo si los recibe:
+if (Serial.available() > 0) {
+// lee el byte de entrada:
+char valor = Serial.read();
+//lo vuelca a pantalla
+if(valor =='F'){
+  Serial.print("Valor de la fotoresistencia es"); Serial.println(valorF,'\n');
+}
+else if(valor=='L'){
+   valorL=analogRead(pin1);
+      Serial.print("Valor de la humedad es"); Serial.println(valorL,'\n');
+}
+else
+valorF=analogRead(pin0);
+valorL=analogRead(pin1);
+Serial.print("He recibido: "); Serial.println(valor,'\n');
+Serial.println(valorF,'\n');
+Serial.println(valorL,'\n');
+}
+}
